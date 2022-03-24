@@ -12,8 +12,13 @@ variable "gke_username" {
 }
 
 variable "gke_password" {
-  default     = ""
+  # default     = "Should123Work"
+  type        = string
   description = "gke password"
+  validation {
+    condition     = length(var.gke_password) >= 8 && can(regex(".*[A-Z].*", var.gke_password))
+    error_message = "The gke_password must be 8 or more characters and have one (or more) capitals."
+  }
 }
 
 variable "gke_num_nodes" {
